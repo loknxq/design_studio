@@ -5,6 +5,7 @@ import model.OrderStatus;
 import service.ClientService;
 import service.DesignOrderService;
 import service.DesignerService;
+import util.DatabaseInitializer;
 import util.DatabaseManager;
 import util.ExcelExporter;
 
@@ -24,6 +25,14 @@ public class Main {
     private static final DesignOrderService orderService = new DesignOrderService();
 
     public static void main(String[] args) {
+
+        try {
+            DatabaseInitializer.initialize();
+            System.out.println("База данных готова к работе");
+        } catch (Exception e) {
+            System.out.println("Не удалось подключиться к БД: " + e.getMessage());
+            return;
+        }
 
         while (true) {
             System.out.println("          ДИЗАЙН-СТУДИЯ");
