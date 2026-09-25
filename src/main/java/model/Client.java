@@ -56,6 +56,6 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client{id=" + id + ", fullName='" + fullName + "', email='" + email + "', phone='" + phone + "'}";
+        return "Клиент id:" + id + ", ФИО:'" + fullName + "', email:'" + email + "', номер телефона'" + phone;
     }
 }

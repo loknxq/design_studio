@@ -56,6 +56,6 @@ public class Designer {
 
     @Override
     public String toString() {
-        return "Designer{id=" + id + ", fullName='" + fullName + "', specialization='" + specialization + "', email='" + email + "'}";
+        return "Дизайнер id:" + id + ", ФИО:'" + fullName + "', специализация:'" + specialization + "', email:'" + email;
     }
 }

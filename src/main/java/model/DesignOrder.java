@@ -107,8 +107,8 @@ public class DesignOrder {
 
     @Override
     public String toString() {
-        return "DesignOrder{id=" + id + ", title='" + title + "', price=" + price +
-                ", status=" + status + ", createdDate=" + createdDate +
-                ", clientId=" + clientId + ", designerId=" + designerId + "}";
+        return "Дизайн заказ id:" + id + ", заголовок:'" + title + "', цена:" + price +
+                ", статус:" + status + ", дата создания:" + createdDate +
+                ", id клиента:" + clientId + ", id дизайнера:" + designerId;
     }
 }

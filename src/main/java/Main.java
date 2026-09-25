@@ -26,9 +26,7 @@ public class Main {
     public static void main(String[] args) {
 
         while (true) {
-            System.out.println("========================================");
             System.out.println("          ДИЗАЙН-СТУДИЯ");
-            System.out.println("========================================");
             System.out.println("1. Клиенты");
             System.out.println("2. Дизайнеры");
             System.out.println("3. Дизайн-заказы");
@@ -62,7 +60,7 @@ public class Main {
 
     private static void clientMenu() {
         while (true) {
-            System.out.println("\n--- КЛИЕНТЫ ---");
+            System.out.println("\n   КЛИЕНТЫ");
             System.out.println("1. Создать");
             System.out.println("2. Показать всех");
             System.out.println("3. Найти по ID");
@@ -159,7 +157,7 @@ public class Main {
 
     private static void designerMenu() {
         while (true) {
-            System.out.println("\n--- ДИЗАЙНЕРЫ ---");
+            System.out.println("\n   ДИЗАЙНЕРЫ ");
             System.out.println("1. Создать");
             System.out.println("2. Показать всех");
             System.out.println("3. Найти по ID");
@@ -256,7 +254,7 @@ public class Main {
 
     private static void orderMenu() {
         while (true) {
-            System.out.println("\n--- ДИЗАЙН-ЗАКАЗЫ ---");
+            System.out.println("\n    ДИЗАЙН-ЗАКАЗЫ");
             System.out.println("1. Создать");
             System.out.println("2. Показать все");
             System.out.println("3. Найти по ID");
@@ -362,7 +360,7 @@ public class Main {
 
     private static void searchMenu() {
         while (true) {
-            System.out.println("\n--- ПОИСК ---");
+            System.out.println("\n    ПОИСК");
             System.out.println("1. По названию заказа");
             System.out.println("2. По описанию заказа");
             System.out.println("0. Назад");
@@ -400,7 +398,7 @@ public class Main {
 
     private static void filterMenu() {
         while (true) {
-            System.out.println("\n--- ФИЛЬТРАЦИЯ ---");
+            System.out.println("\n   ФИЛЬТРАЦИЯ");
             System.out.println("1. По статусу");
             System.out.println("2. По диапазону цены");
             System.out.println("0. Назад");
@@ -440,7 +438,7 @@ public class Main {
 
     private static void sortMenu() {
         while (true) {
-            System.out.println("\n--- СОРТИРОВКА ---");
+            System.out.println("\n    СОРТИРОВКА");
             System.out.println("1. По цене");
             System.out.println("2. По дате");
             System.out.println("0. Назад");
@@ -461,7 +459,7 @@ public class Main {
     private static void showStatistics() {
         try {
             Map<String, Long> stats = orderService.getStatistics();
-            System.out.println("\n--- СТАТИСТИКА ---");
+            System.out.println("\n    СТАТИСТИКА");
             stats.forEach((key, value) -> System.out.println(key + ": " + value));
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
@@ -480,11 +478,11 @@ public class Main {
 
     private static void showAllTables() {
         try {
-            System.out.println("\n--- КЛИЕНТЫ ---");
+            System.out.println("\n   КЛИЕНТЫ");
             clientService.getAll().forEach(System.out::println);
-            System.out.println("\n--- ДИЗАЙНЕРЫ ---");
+            System.out.println("\n   ДИЗАЙНЕРЫ");
             designerService.getAll().forEach(System.out::println);
-            System.out.println("\n--- ЗАКАЗЫ ---");
+            System.out.println("\n   ЗАКАЗЫ");
             orderService.getAll().forEach(System.out::println);
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
