@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.designstudio.controller.StatisticsController">
+
+    <top>
+        <HBox styleClass="form-panel" spacing="8">
+            <Label text="Статистика" styleClass="panel-title"/>
+            <Button text="Обновить" onAction="#onRefresh"/>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true">
+            <GridPane fx:id="grid" hgap="20" vgap="8" styleClass="stat-grid"/>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

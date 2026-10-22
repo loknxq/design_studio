@@ -1,8 +1,8 @@
-package service;
+package com.designstudio.service;
 
-import exception.BusinessException;
-import model.Designer;
-import repository.DesignerRepository;
+import com.designstudio.exception.BusinessException;
+import com.designstudio.model.Designer;
+import com.designstudio.repository.DesignerRepository;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
-package repository;
+package com.designstudio.repository;
 
-import exception.EntityNotFoundException;
-import model.DesignOrder;
-import model.OrderStatus;
-import util.DatabaseManager;
+import com.designstudio.exception.EntityNotFoundException;
+import com.designstudio.model.DesignOrder;
+import com.designstudio.model.OrderStatus;
+import com.designstudio.util.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,7 +35,11 @@ public class DesignOrderRepository {
     }
 
     public List<DesignOrder> findAll() {
-        String sql = "SELECT * FROM design_orders ORDER BY id";
+        String sql = "SELECT o.*, c.full_name AS client_name, d.full_name AS designer_name " +
+                "FROM design_orders o " +
+                "LEFT JOIN clients c ON o.client_id = c.id " +
+                "LEFT JOIN designers d ON o.designer_id = d.id " +
+                "ORDER BY o.id";
         List<DesignOrder> result = new ArrayList<>();
         try (Connection connection = DatabaseManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql);
@@ -50,7 +54,11 @@ public class DesignOrderRepository {
     }
 
     public DesignOrder findById(int id) {
-        String sql = "SELECT * FROM design_orders WHERE id = ?";
+        String sql = "SELECT o.*, c.full_name AS client_name, d.full_name AS designer_name " +
+                "FROM design_orders o " +
+                "LEFT JOIN clients c ON o.client_id = c.id " +
+                "LEFT JOIN designers d ON o.designer_id = d.id " +
+                "WHERE o.id = ?";
         try (Connection connection = DatabaseManager.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, id);
@@ -102,7 +110,7 @@ public class DesignOrderRepository {
     }
 
     private DesignOrder mapRow(ResultSet rs) throws SQLException {
-        return new DesignOrder(
+        DesignOrder order = new DesignOrder(
                 rs.getInt("id"),
                 rs.getString("title"),
                 rs.getString("description"),
@@ -112,5 +120,8 @@ public class DesignOrderRepository {
                 rs.getInt("client_id"),
                 rs.getInt("designer_id")
         );
+        order.setClientName(rs.getString("client_name"));
+        order.setDesignerName(rs.getString("designer_name"));
+        return order;
     }
 }

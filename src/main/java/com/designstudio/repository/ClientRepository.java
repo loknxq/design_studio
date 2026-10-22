@@ -1,8 +1,8 @@
-package repository;
+package com.designstudio.repository;
 
-import exception.EntityNotFoundException;
-import model.Client;
-import util.DatabaseManager;
+import com.designstudio.exception.EntityNotFoundException;
+import com.designstudio.model.Client;
+import com.designstudio.util.DatabaseManager;
 
 import java.sql.*;
 import java.util.ArrayList;

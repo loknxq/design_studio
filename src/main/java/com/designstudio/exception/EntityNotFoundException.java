@@ -1,4 +1,4 @@
-package exception;
+package com.designstudio.exception;
 
 public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {

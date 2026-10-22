@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.designstudio.controller.DesignerController">
+
+    <left>
+        <VBox styleClass="form-panel" spacing="8">
+            <Label text="Дизайнер" styleClass="panel-title"/>
+            <Label text="ФИО"/>
+            <TextField fx:id="nameField"/>
+            <Label text="Специализация"/>
+            <TextField fx:id="specField"/>
+            <Label text="Email"/>
+            <TextField fx:id="emailField"/>
+
+            <HBox spacing="5">
+                <Button text="Добавить" onAction="#onAdd"/>
+                <Button text="Изменить" onAction="#onUpdate"/>
+            </HBox>
+            <HBox spacing="5">
+                <Button text="Удалить" onAction="#onDelete"/>
+                <Button text="Очистить" onAction="#onClear"/>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="8" styleClass="table-panel">
+            <HBox spacing="8">
+                <Label text="Поиск:"/>
+                <TextField fx:id="searchField" promptText="ФИО, специализация или email" HBox.hgrow="ALWAYS"/>
+                <Button text="Обновить" onAction="#onRefresh"/>
+            </HBox>
+            <TableView fx:id="table" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="60"/>
+                    <TableColumn fx:id="nameColumn" text="ФИО" prefWidth="250"/>
+                    <TableColumn fx:id="specColumn" text="Специализация" prefWidth="200"/>
+                    <TableColumn fx:id="emailColumn" text="Email" prefWidth="220"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>

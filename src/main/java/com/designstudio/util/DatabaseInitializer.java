@@ -1,4 +1,4 @@
-package util;
+package com.designstudio.util;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.designstudio.controller.OrderController">
+
+    <left>
+        <VBox styleClass="form-panel" spacing="6">
+            <Label text="Заказ" styleClass="panel-title"/>
+            <Label text="Название"/>
+            <TextField fx:id="titleField"/>
+            <Label text="Описание"/>
+            <TextField fx:id="descField"/>
+            <Label text="Цена"/>
+            <TextField fx:id="priceField"/>
+            <Label text="Статус"/>
+            <ComboBox fx:id="statusBox" maxWidth="Infinity"/>
+            <Label text="Дата"/>
+            <DatePicker fx:id="datePicker" maxWidth="Infinity"/>
+            <Label text="Клиент"/>
+            <ComboBox fx:id="clientBox" maxWidth="Infinity"/>
+            <Label text="Дизайнер"/>
+            <ComboBox fx:id="designerBox" maxWidth="Infinity"/>
+
+            <HBox spacing="5">
+                <Button text="Добавить" onAction="#onAdd"/>
+                <Button text="Изменить" onAction="#onUpdate"/>
+            </HBox>
+            <HBox spacing="5">
+                <Button text="Удалить" onAction="#onDelete"/>
+                <Button text="Очистить" onAction="#onClear"/>
+            </HBox>
+        </VBox>
+    </left>
+
+    <center>
+        <VBox spacing="8" styleClass="table-panel">
+            <HBox spacing="8">
+                <Label text="Поиск:"/>
+                <TextField fx:id="searchField" promptText="Название или описание" HBox.hgrow="ALWAYS"/>
+                <Button text="Обновить" onAction="#onRefresh"/>
+            </HBox>
+            <HBox spacing="8">
+                <Label text="Статус:"/>
+                <ComboBox fx:id="filterStatusBox" prefWidth="150"/>
+                <Label text="Цена от:"/>
+                <TextField fx:id="minPriceField" prefWidth="90"/>
+                <Label text="до:"/>
+                <TextField fx:id="maxPriceField" prefWidth="90"/>
+                <Label text="Сортировка:"/>
+                <ComboBox fx:id="sortBox" prefWidth="200"/>
+                <Button text="Применить" onAction="#onApplyFilters"/>
+                <Button text="Экспорт" onAction="#onExport"/>
+            </HBox>
+            <TableView fx:id="table" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="idColumn" text="ID" prefWidth="50"/>
+                    <TableColumn fx:id="titleColumn" text="Название" prefWidth="180"/>
+                    <TableColumn fx:id="descColumn" text="Описание" prefWidth="200"/>
+                    <TableColumn fx:id="priceColumn" text="Цена" prefWidth="100"/>
+                    <TableColumn fx:id="statusColumn" text="Статус" prefWidth="100"/>
+                    <TableColumn fx:id="dateColumn" text="Дата" prefWidth="100"/>
+                    <TableColumn fx:id="clientColumn" text="Клиент" prefWidth="160"/>
+                    <TableColumn fx:id="designerColumn" text="Дизайнер" prefWidth="160"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+
+</BorderPane>

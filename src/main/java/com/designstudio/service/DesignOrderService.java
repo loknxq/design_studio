@@ -1,11 +1,11 @@
-package service;
+package com.designstudio.service;
 
-import exception.BusinessException;
-import model.DesignOrder;
-import model.OrderStatus;
-import repository.ClientRepository;
-import repository.DesignOrderRepository;
-import repository.DesignerRepository;
+import com.designstudio.exception.BusinessException;
+import com.designstudio.model.DesignOrder;
+import com.designstudio.model.OrderStatus;
+import com.designstudio.repository.ClientRepository;
+import com.designstudio.repository.DesignOrderRepository;
+import com.designstudio.repository.DesignerRepository;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
@@ -45,15 +45,14 @@ public class DesignOrderService {
         orderRepository.delete(id);
     }
 
-    public List<DesignOrder> searchByTitle(String text) {
+    public List<DesignOrder> search(String text) {
+        if (text == null || text.isBlank()) {
+            return getAll();
+        }
+        String lower = text.toLowerCase();
         return orderRepository.findAll().stream()
-                .filter(o -> o.getTitle().toLowerCase().contains(text.toLowerCase()))
-                .collect(Collectors.toList());
-    }
-
-    public List<DesignOrder> searchByDescription(String text) {
-        return orderRepository.findAll().stream()
-                .filter(o -> o.getDescription().toLowerCase().contains(text.toLowerCase()))
+                .filter(o -> o.getTitle().toLowerCase().contains(lower)
+                        || o.getDescription().toLowerCase().contains(lower))
                 .collect(Collectors.toList());
     }
 
@@ -69,28 +68,53 @@ public class DesignOrderService {
                 .collect(Collectors.toList());
     }
 
-    public List<DesignOrder> sortByPrice() {
+    public List<DesignOrder> sortByPrice(boolean ascending) {
+        Comparator<DesignOrder> comparator = Comparator.comparing(DesignOrder::getPrice);
+        if (!ascending) comparator = comparator.reversed();
         return orderRepository.findAll().stream()
-                .sorted(Comparator.comparing(DesignOrder::getPrice))
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
-    public List<DesignOrder> sortByDate() {
+    public List<DesignOrder> sortByDate(boolean ascending) {
+        Comparator<DesignOrder> comparator = Comparator.comparing(DesignOrder::getCreatedDate);
+        if (!ascending) comparator = comparator.reversed();
         return orderRepository.findAll().stream()
-                .sorted(Comparator.comparing(DesignOrder::getCreatedDate))
+                .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
-    public Map<String, Long> getStatistics() {
+    public Map<String, String> getStatistics() {
         List<DesignOrder> all = orderRepository.findAll();
-        Map<String, Long> stats = new LinkedHashMap<>();
-        stats.put("Всего клиентов", (long) clientRepository.findAll().size());
-        stats.put("Всего дизайнеров", (long) designerRepository.findAll().size());
-        stats.put("Всего заказов", (long) all.size());
-        stats.put("Новых заказов", all.stream().filter(o -> o.getStatus() == OrderStatus.NEW).count());
-        stats.put("В работе", all.stream().filter(o -> o.getStatus() == OrderStatus.IN_PROGRESS).count());
-        stats.put("Завершённых", all.stream().filter(o -> o.getStatus() == OrderStatus.DONE).count());
-        stats.put("Отменённых", all.stream().filter(o -> o.getStatus() == OrderStatus.CANCELLED).count());
+        Map<String, String> stats = new LinkedHashMap<>();
+
+        stats.put("Всего клиентов", String.valueOf(clientRepository.findAll().size()));
+        stats.put("Всего дизайнеров", String.valueOf(designerRepository.findAll().size()));
+        stats.put("Всего заказов", String.valueOf(all.size()));
+
+        stats.put("Новых заказов", String.valueOf(
+                all.stream().filter(o -> o.getStatus() == OrderStatus.NEW).count()));
+        stats.put("Заказов в работе", String.valueOf(
+                all.stream().filter(o -> o.getStatus() == OrderStatus.IN_PROGRESS).count()));
+        stats.put("Завершённых заказов", String.valueOf(
+                all.stream().filter(o -> o.getStatus() == OrderStatus.DONE).count()));
+        stats.put("Отменённых заказов", String.valueOf(
+                all.stream().filter(o -> o.getStatus() == OrderStatus.CANCELLED).count()));
+        BigDecimal total = all.stream()
+                .map(DesignOrder::getPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        stats.put("Общая сумма заказов", total.toString());
+
+        BigDecimal avg = all.isEmpty()
+                ? BigDecimal.ZERO
+                : total.divide(BigDecimal.valueOf(all.size()), 2, java.math.RoundingMode.HALF_UP);
+        stats.put("Средняя цена заказа", avg.toString());
+
+        BigDecimal min = all.stream().map(DesignOrder::getPrice).min(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+        BigDecimal max = all.stream().map(DesignOrder::getPrice).max(BigDecimal::compareTo).orElse(BigDecimal.ZERO);
+        stats.put("Минимальная цена", min.toString());
+        stats.put("Максимальная цена", max.toString());
+
         return stats;
     }
 
